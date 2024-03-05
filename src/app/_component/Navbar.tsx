@@ -19,10 +19,11 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FC, MouseEventHandler } from 'react';
+import { P, match } from 'ts-pattern';
 
 export const Navbar: FC = function () {
   const router = useRouter();
-  const user = useUser();
+  const { user, isUserLoading } = useUser();
   const { theme, setTheme } = useTheme();
 
   const handleSignIn: MouseEventHandler = async function (e) {
@@ -56,42 +57,51 @@ export const Navbar: FC = function () {
       </Link>
 
       <div className="flex items-center space-x-4">
-        {user ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-none">
-              <Avatar className="size-8">
-                <AvatarImage
-                  src={user.photoURL!}
-                  referrerPolicy="no-referrer"
-                />
-                <AvatarFallback>
-                  {user.displayName?.at(0)?.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent sideOffset={10}>
-              <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href="/dashboard">Dashboard</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/api-key-management">Manage API Keys</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleSignOut}>
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Button
-            className={cn('outline outline-1 outline-white')}
-            size="sm"
-            onClick={handleSignIn}
-          >
-            Sign in
-          </Button>
-        )}
+        {match(isUserLoading)
+          .with(false, () =>
+            match(user)
+              .with(P.nullish, () => (
+                <Button
+                  className={cn('outline outline-1 outline-white')}
+                  size="sm"
+                  onClick={handleSignIn}
+                >
+                  Sign in
+                </Button>
+              ))
+              .otherwise((user) => (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="focus:outline-none">
+                    <Avatar className="size-8">
+                      <AvatarImage
+                        src={user.photoURL!}
+                        referrerPolicy="no-referrer"
+                      />
+                      <AvatarFallback>
+                        {user.displayName?.at(0)?.toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent sideOffset={10}>
+                    <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Link href="/dashboard">Dashboard</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/api-key-management">Manage API Keys</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ))
+          )
+          .otherwise(() => (
+            <p>Loading</p>
+          ))}
+
         <Toggle aria-label="Toggle theme" onClick={handleSwitchTheme}>
           {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
         </Toggle>
