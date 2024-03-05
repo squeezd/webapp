@@ -43,8 +43,14 @@ export const Navbar: FC = function () {
     }
   };
 
+  const handleSwitchTheme: MouseEventHandler = function (e) {
+    e.preventDefault();
+
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
-    <nav className="w-screen fixed px-4 py-2 min-h-8 flex justify-between items-center opacity-90 dark:bg-black bg-white border-b-[1px] border-b-white">
+    <nav className="w-screen fixed px-4 py-2 min-h-8 flex justify-between items-center opacity-90 dark:bg-black bg-white border-b-[1px] dark:border-b-white border-b-black">
       <Link href="/" className="text-black dark:text-white font-bold text-xl">
         Squeezd
       </Link>
@@ -86,10 +92,7 @@ export const Navbar: FC = function () {
             Sign in
           </Button>
         )}
-        <Toggle
-          aria-label="Toggle theme"
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        >
+        <Toggle aria-label="Toggle theme" onClick={handleSwitchTheme}>
           {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
         </Toggle>
       </div>

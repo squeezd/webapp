@@ -1,25 +1,6 @@
-import {
-  AiOutlineCloud,
-  AiOutlineDashboard,
-  AiOutlineLock,
-} from 'react-icons/ai';
+import { Reason } from '@/app/_component/Reason';
 
 export default async function Home() {
-  const reasons = [
-    {
-      reason: 'Keep Your link safely in our secure database.',
-      Icon: AiOutlineCloud,
-    },
-    {
-      reason: 'Easily enable and disable your links if needed.',
-      Icon: AiOutlineLock,
-    },
-    {
-      reason: "We won't keeps you waiting by watching ads",
-      Icon: AiOutlineDashboard,
-    },
-  ];
-
   return (
     <>
       <main className="min-h-screen">
@@ -36,19 +17,7 @@ export default async function Home() {
             <div className="text-3xl">
               Why <b>Squeezd</b> ?
             </div>
-            <div className="flex justify-between space-x-40 items-center">
-              {reasons.map((r) => (
-                <div
-                  key={r.reason}
-                  className="flex flex-col items-center mx-4 w-12"
-                >
-                  <r.Icon color="white" size="4em" />
-                  <div className="text-center pt-8 font-medium w-40">
-                    {r.reason}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Reason />
           </div>
         </div>
       </main>
