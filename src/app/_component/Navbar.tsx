@@ -41,7 +41,9 @@ export const Navbar: FC = function () {
 
   return (
     <nav className="w-screen px-4 py-4 md:pr-10 flex fixed justify-between items-center bg-black border-white">
-      <div className="text-white font-bold text-xl">Squeezd</div>
+      <Link href="/" className="text-white font-bold text-xl">
+        Squeezd
+      </Link>
 
       {user ? (
         <DropdownMenu>
