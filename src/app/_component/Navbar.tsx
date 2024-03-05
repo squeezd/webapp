@@ -13,6 +13,7 @@ import {
 import { clientSignInWithGoogle, clientSignOut } from '@/lib/firebase/client';
 import { useUser } from '@/lib/firebase/hooks';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FC, MouseEventHandler } from 'react';
 
@@ -46,7 +47,7 @@ export const Navbar: FC = function () {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="size-8">
-              <AvatarImage src={user.photoURL!} />
+              <AvatarImage src={user.photoURL!} referrerPolicy="no-referrer" />
               <AvatarFallback>
                 {user.displayName?.at(0)?.toUpperCase()}
               </AvatarFallback>
@@ -55,9 +56,12 @@ export const Navbar: FC = function () {
           <DropdownMenuContent sideOffset={10}>
             <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Dashboard</DropdownMenuItem>
-            <DropdownMenuItem>Manage API Keys</DropdownMenuItem>
-            <DropdownMenuItem>Setting</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/dashboard">Dashboard</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/api-key-management">Manage API Keys</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
