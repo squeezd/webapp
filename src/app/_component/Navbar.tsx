@@ -45,7 +45,7 @@ export const Navbar: FC = function () {
 
       {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className="focus:outline-none">
             <Avatar className="size-8">
               <AvatarImage src={user.photoURL!} referrerPolicy="no-referrer" />
               <AvatarFallback>
