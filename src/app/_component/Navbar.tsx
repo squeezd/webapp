@@ -44,7 +44,7 @@ export const Navbar: FC = function () {
   };
 
   return (
-    <nav className="w-screen px-4 py-2 flex fixed justify-between items-center dark:bg-black bg-white border-b-[1px] border-b-white">
+    <nav className="w-screen fixed px-4 py-2 min-h-8 flex justify-between items-center opacity-90 dark:bg-black bg-white border-b-[1px] border-b-white">
       <Link href="/" className="text-black dark:text-white font-bold text-xl">
         Squeezd
       </Link>
