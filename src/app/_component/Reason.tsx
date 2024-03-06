@@ -30,7 +30,10 @@ export const Reason: FC = function () {
     <div className="flex justify-between space-x-40 items-center">
       {reasons.map((r) => (
         <div key={r.reason} className="flex flex-col items-center mx-4 w-12">
-          <r.Icon color={theme === 'dark' ? 'white' : 'black'} size="4em" />
+          <r.Icon
+            color={theme === 'dark' || !theme ? 'white' : 'black'}
+            size="4em"
+          />
           <div className="text-center pt-8 font-medium w-40">{r.reason}</div>
         </div>
       ))}

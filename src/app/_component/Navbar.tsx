@@ -58,8 +58,12 @@ export const Navbar: FC = function () {
 
       <div className="flex items-center space-x-4">
         {match(isUserLoading)
-          .with(false, () =>
+          .with(true, () => <p>Loading</p>)
+          .otherwise(() =>
             match(user)
+              /**
+               * if not authenticated
+               */
               .with(P.nullish, () => (
                 <Button
                   className={cn('outline outline-1 outline-white')}
@@ -69,6 +73,10 @@ export const Navbar: FC = function () {
                   Sign in
                 </Button>
               ))
+
+              /**
+               * if authenticated
+               */
               .otherwise((user) => (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="focus:outline-none">
@@ -97,10 +105,7 @@ export const Navbar: FC = function () {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ))
-          )
-          .otherwise(() => (
-            <p>Loading</p>
-          ))}
+          )}
 
         <Toggle aria-label="Toggle theme" onClick={handleSwitchTheme}>
           {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
