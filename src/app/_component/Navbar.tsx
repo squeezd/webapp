@@ -58,7 +58,12 @@ export const Navbar: FC = function () {
 
       <div className="flex items-center space-x-4">
         {match(isUserLoading)
-          .with(true, () => <p>Loading</p>)
+          .with(true, () => (
+            <svg
+              className="animate-spin bg-white rounded-md h-5 w-5 mr-3"
+              viewBox="0 0 24 24"
+            />
+          ))
           .otherwise(() =>
             match(user)
               /**
@@ -108,7 +113,11 @@ export const Navbar: FC = function () {
           )}
 
         <Toggle aria-label="Toggle theme" onClick={handleSwitchTheme}>
-          {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+          {match(theme)
+            .with(P.union(P.nullish, 'dark'), () => <SunIcon />)
+            .otherwise(() => (
+              <MoonIcon />
+            ))}
         </Toggle>
       </div>
     </nav>

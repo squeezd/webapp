@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export function useUser() {
   const [user, setUser] = useState<User | null>();
-  const [isUserLoading, setIsUserLoading] = useState(false);
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   useEffect(() => {
     clientAuth.onAuthStateChanged(function (u) {
